@@ -13,9 +13,9 @@ export function fetchPopularRepo(language) {
 }
 
 export function battle(players) {
-    axios.all(players.map(getUserData))
-    .then(sortPlayers)
-    .catch(handleError);
+    return axios.all(players.map(getUserData))
+      .then(sortPlayers)
+      .catch(handleError);
 }
 
 function getProfile(username) {
@@ -33,7 +33,7 @@ function getStarCount(repos) {
     return repos.data.reduce((count, repo) => {
         return count + repo.stargazers_count;
     }, 0)
-} 
+}
 
 function calcScore(profile, repos) {
     let followers = profile.followers;
@@ -49,7 +49,7 @@ function handleError(err) {
 }
 
 function getUserData(player) {
-    axios.all([
+    return axios.all([
         getProfile(player),
         getRepos(player)
     ]).then((data) => {
